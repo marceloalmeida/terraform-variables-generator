@@ -15,11 +15,13 @@ import (
 var replacer *strings.Replacer
 var varPrefix = "var."
 
-var varTemplate = template.Must(template.New("var_file").Parse(`{{range .}}
-variable "{{ . }}" {
-  description = ""
-}
-{{end}}`))
+var varTemplate = template.Must(template.New("var_file").Funcs(template.FuncMap{"sub": sub}).Parse(`{{- $length := len . -}}
+{{- range $i, $v := . -}}
+variable "{{ $v }}" {}
+{{- if lt $i (sub $length 1) }}{{ "\n\n" }}{{ end -}}
+{{ end -}}`))
+
+func sub(a, b int) int { return a - b }
 
 func init() {
 	replacer = strings.NewReplacer(":", ".",
