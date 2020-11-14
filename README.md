@@ -1,6 +1,6 @@
 # terraform-variables-generator
 
-Simple Tool to Generate Variables file from Terraform Configuration. It will find all *.tf files in current directory, and generate variables.tf file. If you already have this file, it will ask to override it.
+Simple Tool to Generate Variables file from Terraform Configuration. It will find all `*.tf` files in current directory, and generate variables.tf file. If you already have this file, it will ask to override it.
 
 ## Build
 
@@ -14,15 +14,15 @@ go build .
 ./terraform-variables-generator
 ```
 
-It will find all *.tf files in current directory, and generate variables.tf file. If you already have this file, it will ask to override it.
+It will find all `*.tf` files in current directory, and generate variables.tf file. If you already have this file, it will ask to override it.
 
 ### Example
 
 ```text
 resource "aws_vpc" "vpc" {
-  cidr_block           = "${var.cidr}"
-  enable_dns_hostnames = "${var.enable_dns_hostnames}"
-  enable_dns_support   = "${var.enable_dns_support}"
+  cidr_block           = var.cidr
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support   = var.enable_dns_support
 
   tags {
     Name = "${var.name}"
@@ -40,30 +40,18 @@ resource "aws_internet_gateway" "vpc" {
 
  Will generate
 
- ```text
- variable "ami" {
-   description  = ""
-}
+ ```hcl
+ variable "ami" {}
 
-variable "instance_type" {
-   description  = ""
-}
+variable "instance_type" {}
 
-variable "cidr" {
-   description  = ""
-}
+variable "cidr" {}
 
-variable "enable_dns_hostnames" {
-   description  = ""
-}
+variable "enable_dns_hostnames" {}
 
-variable "enable_dns_support" {
-   description  = ""
-}
+variable "enable_dns_support" {}
 
-variable "name" {
-   description  = ""
-}
+variable "name" {}
  ```
 
 ## Tests
