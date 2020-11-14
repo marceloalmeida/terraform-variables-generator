@@ -1,4 +1,4 @@
-module github.com/alexandrst88/terraform-variables-generator
+module github.com/marceloalmeida/terraform-variables-generator
 
 go 1.12
 

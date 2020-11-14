@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/alexandrst88/terraform-variables-generator/pkg/utils"
+	"github.com/marceloalmeida/terraform-variables-generator/pkg/utils"
 )
 
 type terraformVars struct {
