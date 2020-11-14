@@ -18,19 +18,19 @@ It will find all `*.tf` files in current directory, and generate variables.tf fi
 
 ### Example
 
-```text
+```hcl
 resource "aws_vpc" "vpc" {
   cidr_block           = var.cidr
   enable_dns_hostnames = var.enable_dns_hostnames
   enable_dns_support   = var.enable_dns_support
 
   tags {
-    Name = "${var.name}"
+    Name = var.name
   }
 }
 
 resource "aws_internet_gateway" "vpc" {
-  vpc_id = "${aws_vpc.vpc.id}"
+  vpc_id = aws_vpc.vpc.id
 
   tags {
     Name = "${var.name}-igw"
