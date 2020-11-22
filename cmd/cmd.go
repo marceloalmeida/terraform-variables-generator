@@ -8,8 +8,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/marceloalmeida/terraform-variables-generator/pkg/generator"
-	"github.com/marceloalmeida/terraform-variables-generator/pkg/utils"
+	"github.com/alexandrst88/terraform-variables-generator/pkg/generator"
+	"github.com/alexandrst88/terraform-variables-generator/pkg/utils"
 )
 
 const (

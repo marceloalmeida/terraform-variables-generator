@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/marceloalmeida/terraform-variables-generator/pkg/utils"
+	"github.com/alexandrst88/terraform-variables-generator/pkg/utils"
 )
 
 var testExtFile = "*.mock"
