@@ -14,6 +14,7 @@ import (
 
 var replacer *strings.Replacer
 var varPrefix = "var."
+var localPrefix = "local."
 
 var varTemplate = template.Must(template.New("var_file").Funcs(template.FuncMap{"sub": sub}).Parse(`{{- $length := len . -}}
 {{- range $i, $v := . -}}
@@ -22,6 +23,11 @@ variable "{{ $v }}" {}
 {{ end -}}{{printf "\n"}}`))
 
 func sub(a, b int) int { return a - b }
+
+var localsTemplate = template.Must(template.New("locals_file").Parse(`locals { {{ range . }}
+  {{ . }} ={{ end }}
+}
+`))
 
 func init() {
 	replacer = strings.NewReplacer(":", ".",
@@ -34,12 +40,13 @@ func init() {
 		"[", "",
 		",", "",
 		"var.", "",
+		"local.", "",
 		" ", "",
 	)
 }
 
-// GenerateVars will write generated vars to file
-func GenerateVars(tfFiles []string, dstFile string) {
+// Generate will write inputs to file
+func Generate(tfFiles []string, varsDstFile string, localsDstFile string) {
 	var wg sync.WaitGroup
 	messages := make(chan string)
 	wg.Add(len(tfFiles))
@@ -59,14 +66,27 @@ func GenerateVars(tfFiles []string, dstFile string) {
 	go func() {
 		for text := range messages {
 			t.matchVarPref(text, varPrefix)
+			t.matchLocalPref(text, localPrefix)
 		}
 	}()
 	wg.Wait()
-	f, err := os.Create(dstFile)
-	utils.CheckError(err)
 
-	t.sortVars()
-	err = varTemplate.Execute(f, t.Variables)
-	utils.CheckError(err)
-	log.Infof("Variables are generated to %q file", dstFile)
+	if len(t.Variables) > 0 {
+		f, err := os.Create(varsDstFile)
+		utils.CheckError(err)
+		log.Infof("Variables are generated to %q file", varsDstFile)
+
+		t.sort(t.Variables)
+		err = varTemplate.Execute(f, t.Variables)
+		utils.CheckError(err)
+	}
+
+	if len(t.Locals) > 0 {
+		t.sort(t.Locals)
+		localsFile, err := os.Create(localsDstFile)
+		utils.CheckError(err)
+		err = localsTemplate.Execute(localsFile, t.Locals)
+		utils.CheckError(err)
+		log.Infof("Locals are generated to %q file", localsDstFile)
+	}
 }
