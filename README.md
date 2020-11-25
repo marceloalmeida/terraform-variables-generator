@@ -38,10 +38,10 @@ resource "aws_internet_gateway" "vpc" {
 }
 ```
 
- Will generate
+Will generate
 
- ```hcl
- variable "ami" {}
+```hcl
+variable "ami" {}
 
 variable "instance_type" {}
 
@@ -52,7 +52,7 @@ variable "enable_dns_hostnames" {}
 variable "enable_dns_support" {}
 
 variable "name" {}
- ```
+```
 
 ## Tests
 

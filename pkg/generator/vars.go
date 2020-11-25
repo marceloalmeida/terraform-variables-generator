@@ -19,7 +19,7 @@ var varTemplate = template.Must(template.New("var_file").Funcs(template.FuncMap{
 {{- range $i, $v := . -}}
 variable "{{ $v }}" {}
 {{- if lt $i (sub $length 1) }}{{ "\n\n" }}{{ end -}}
-{{ end -}}`))
+{{ end -}}{{printf "\n"}}`))
 
 func sub(a, b int) int { return a - b }
 
