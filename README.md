@@ -51,17 +51,29 @@ resource "aws_internet_gateway" "vpc" {
 Will generate
 
 ```hcl
-variable "ami" {}
+variable "ami" {
+  description = ""
+}
 
-variable "instance_type" {}
+variable "instance_type" {
+  description = ""
+}
 
-variable "cidr" {}
+variable "cidr" {
+  description = ""
+}
 
-variable "enable_dns_hostnames" {}
+variable "enable_dns_hostnames" {
+  description = ""
+}
 
-variable "enable_dns_support" {}
+variable "enable_dns_support" {
+  description = ""
+}
 
-variable "name" {}
+variable "name" {
+  description = ""
+}
 ```
 
 ## Tests
